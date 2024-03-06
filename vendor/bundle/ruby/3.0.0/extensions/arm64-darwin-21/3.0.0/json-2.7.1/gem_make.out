@@ -1,0 +1,13 @@
+current directory: /Users/sayali_1403/Documents/Projects/react_native_authflow/vendor/bundle/ruby/3.0.0/gems/json-2.7.1/ext/json
+/Users/sayali_1403/.rvm/rubies/ruby-3.0.0/bin/ruby -I /Users/sayali_1403/.rvm/rubies/ruby-3.0.0/lib/ruby/3.0.0 -r ./siteconf20240306-92897-98ud31.rb extconf.rb
+creating Makefile
+
+current directory: /Users/sayali_1403/Documents/Projects/react_native_authflow/vendor/bundle/ruby/3.0.0/gems/json-2.7.1/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/sayali_1403/Documents/Projects/react_native_authflow/vendor/bundle/ruby/3.0.0/gems/json-2.7.1/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/sayali_1403/Documents/Projects/react_native_authflow/vendor/bundle/ruby/3.0.0/gems/json-2.7.1/ext/json
+make "DESTDIR=" install
