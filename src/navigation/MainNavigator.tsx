@@ -6,10 +6,11 @@ import {
   useState,
 } from 'react';
 import {AuthContext} from '../context/AuthContext';
-import AuthScreen from '../screens/Auth/AuthScreen';
+import LoginScreen from '../screens/Login/LoginScreen';
 import HomeScreen from '../screens/Home/HomeScreen';
 import VerifyOtpScreen from '../screens/VerifyOtp/VerifyOtpScreen';
 import strings from '../utils/strings';
+import Signup from '../screens/Signup/Signup';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,6 @@ export default function MainNavigator() {
   useEffect(() => {
     const checkAuth = async () => {
       const item = await AsyncStorage.getItem('mobileNumber');
-      console.log(item, isLoggedIn);
       if (item !== null) {
         setIsLoggedIn(true);
       } else {
@@ -30,7 +30,7 @@ export default function MainNavigator() {
   }, []);
   return (
     <Stack.Navigator
-      initialRouteName={strings.auth.screenTitle}
+      initialRouteName={strings.login.screenTitle}
       screenOptions={({route, navigation}) => ({
         headerShown: false,
         gestureEnabled: true,
@@ -38,8 +38,12 @@ export default function MainNavigator() {
       {isLoggedIn === false ? (
         <>
           <Stack.Screen
-            name={strings.auth.screenTitle}
-            component={AuthScreen}
+            name={strings.signup.screenTitle}
+            component={Signup}
+          />
+          <Stack.Screen
+            name={strings.login.screenTitle}
+            component={LoginScreen}
           />
           <Stack.Screen
             name={strings.verifyOtp.screenTitle}

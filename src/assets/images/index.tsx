@@ -1,4 +1,5 @@
 export const Images = {
-  AuthImg: require('../../assets/images/authImg.png'),
+  LoginImg: require('../../assets/images/loginImg.png'),
+  SignupImg: require('../../assets/images/signupImg.png'),
   DropDownArrow: require('../../assets/images/dropDownArrow.png'),
 };

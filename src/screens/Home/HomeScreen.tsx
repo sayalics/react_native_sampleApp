@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import * as React from 'react';
 import {Button, View, Text} from 'react-native';
+import { CustomStatusBar } from '../../components/StatusBar';
 import {AuthContext} from '../../context/AuthContext';
 import {ThemeContext} from '../../context/ThemeContext';
 import strings from '../../utils/strings';
@@ -20,7 +21,7 @@ function HomeScreen({navigation}) {
   async function onLogOut() {
     await AsyncStorage.removeItem('mobileNumber');
     setIsLoggedIn(false);
-    // navigation.navigate(strings.auth.screenTitle);
+    // navigation.navigate(strings.login.screenTitle);
   }
 
   return (
@@ -31,6 +32,7 @@ function HomeScreen({navigation}) {
         justifyContent: 'center',
         backgroundColor: theme.primary,
       }}>
+        <CustomStatusBar/>
       <Text
         numberOfLines={2}
         style={{

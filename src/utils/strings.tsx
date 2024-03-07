@@ -1,7 +1,10 @@
 const strings = {
-  auth: {
-    screenTitle: 'Authentication',
-    loginToYourAccount: 'Login to Your Account',
+  signup:{
+    screenTitle:"Signup",
+  },
+  login: {
+    screenTitle: 'Login',
+    loginToYourAccount: 'Login',
     sendOtp: 'Send OTP',
   },
   verifyOtp: {

@@ -1,47 +1,26 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
   SafeAreaView,
-  StyleSheet,
   TouchableOpacity,
-  Dimensions,
   Alert,
-  Keyboard,
 } from 'react-native';
 import Header from '../../components/Header';
 import {ThemeContext} from '../../context/ThemeContext';
 import strings from '../../utils/strings';
 import {OtpInput} from 'react-native-otp-entry';
-import AsyncStorage from '@react-native-community/async-storage';
-import {AuthContext} from '../../context/AuthContext';
+import Button from '../../components/Button';
+import { styles } from './styles';
+import useVerifyOtpViewModel from './VerifyOtpViewModel';
 export default function VerifyOtpScreen({route, navigation}) {
   const theme = useContext(ThemeContext);
-  const [count, setCount] = useState(60);
-  const [value, setValue] = useState('');
-  const {setIsLoggedIn} = useContext(AuthContext);
-
-  useEffect(() => {
-    const intervel = setTimeout(() => {
-      if (count > 0) {
-        setCount(count - 1);
-      }
-    }, 1000);
-    return () => clearInterval(intervel);
-  }, [count]);
-
-  useEffect(() => {
-    value.length === 6 && Keyboard.dismiss();
-  }, [value]);
-
-  function onVerifyOtp() {
-    console.log(route.params.mobileNumber);
-    if (value && value.length == 6) {
-      AsyncStorage.setItem('mobileNumber', route.params.mobileNumber);
-      setIsLoggedIn(true);
-      navigation.navigate(strings.home.screenTitle);
-    }
-  }
+  const {
+    value,
+    count,
+    setValue,
+    onVerifyOtp
+  } = useVerifyOtpViewModel({navigation,route});
   return (
     <>
       <Header
@@ -80,97 +59,19 @@ export default function VerifyOtpScreen({route, navigation}) {
               </Text>
             )}
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              value.length === 6
-                ? onVerifyOtp()
-                : Alert.alert('', 'Please enter valid otp')
-            }
-            style={styles(theme).buttonStyle}>
-            <Text style={styles(theme).buttonText}>{strings.auth.sendOtp}</Text>
-          </TouchableOpacity>
+          
+          <Button
+          onPress={() =>
+            value.length === 6
+              ? onVerifyOtp()
+              : Alert.alert('', 'Please enter valid otp')
+          }
+          buttonText={strings.verifyOtp.screenTitle}
+          disabled={value.length === 0 ? true : false}
+          style={styles(theme).buttonStyle}
+          />
         </View>
       </SafeAreaView>
     </>
   );
 }
-
-const styles = theme =>
-  StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: theme.primary,
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-    },
-    mainView: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      marginHorizontal: 20,
-    },
-    enterOtpText: {
-      fontSize: 20,
-      fontFamily: 'poppins-semibold',
-      color: theme.white,
-      lineHeight: 32,
-      marginTop: 30,
-    },
-
-    inputsContainer: {
-      flexDirection: 'row',
-      flex: 1,
-      justifyContent: 'center',
-      marginTop: 40,
-    },
-    codeContainer: {
-      borderWidth: 1,
-      borderRadius: 12,
-      borderColor: theme.primary2,
-      height: 48,
-      width: 48,
-      margin: 5,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    codeText: {
-      fontSize: 20,
-      color: theme.border,
-    },
-    hiddenInput: {
-      ...StyleSheet.absoluteFillObject,
-      opacity: 0.01,
-    },
-    stick: {
-      width: 2,
-      height: 30,
-      backgroundColor: theme.border,
-    },
-    activePinCodeContainer: {
-      tintColor: theme.white,
-      borderColor: theme.border,
-    },
-    resendOtpText: {
-      fontSize: 16,
-      fontFamily: 'poppins-regular',
-      color: theme.secondary,
-      marginTop: 30,
-    },
-    buttonStyle: {
-      width: Dimensions.get('screen').width - 40,
-      height: 48,
-      backgroundColor: theme.secondary,
-      borderRadius: 12,
-      marginTop: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
-      bottom: 0,
-      position: 'absolute',
-      marginBottom: 30,
-    },
-    buttonText: {
-      fontFamily: 'poppins-bold',
-      fontSize: 16,
-      color: theme.white,
-    },
-  });
