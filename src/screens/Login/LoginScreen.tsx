@@ -135,11 +135,11 @@ export default function AuthScreen({ navigation }) {
             />
           )}
           <View style={styles(theme).otpToggleView}>
-            <Text style={{ color: theme.white, fontSize: 12 }}>
+            <Text style={{ color: theme.white, fontSize: 12, marginRight:10 }}>
               {"Login with OTP"}
             </Text>
             <Switch
-              style={{ alignSelf: "flex-end" }}
+              style={{ alignSelf: "flex-end"}}
               trackColor={{ false: theme.primary2, true: theme.secondary }}
               thumbColor={isEnabled ? theme.white : theme.white}
               ios_backgroundColor="#3e3e3e"
