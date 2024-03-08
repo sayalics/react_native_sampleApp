@@ -23,8 +23,13 @@ function useVerifyOtpViewModel({navigation, route}) {
   
     function onVerifyOtp() {
       if (value && value.length == 6) {
-        AsyncStorage.setItem('mobileNumber', route.params.mobileNumber);
-        setIsLoggedIn(true);
+        if(route.params.mobileNumber){
+          AsyncStorage.setItem('mobileNumber', route.params.mobileNumber);
+          setIsLoggedIn(true);  
+        } else if (route.params.email){
+          AsyncStorage.setItem('mobileNumber', route.params.email);
+          setIsLoggedIn(true);
+        }
       }
     }
 

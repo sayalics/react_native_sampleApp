@@ -8,18 +8,24 @@ import strings from '../../utils/strings';
 
 function HomeScreen({navigation}) {
   const theme = React.useContext(ThemeContext);
-  const [mobileNumber, setMobileNumber] = React.useState('');
+  const [user, setUser] = React.useState('');
   const {setIsLoggedIn} = React.useContext(AuthContext);
   React.useEffect(() => {
     getData();
   });
   async function getData() {
-    const userMobile = await AsyncStorage.getItem('mobileNumber');
-    setMobileNumber(userMobile);
+    const mobile = await AsyncStorage.getItem('mobileNumber');
+    const email = await AsyncStorage.getItem('email');
+    if(mobile){
+      setUser(mobile);
+    } else if (email){
+      setUser(email)
+    }
   }
 
   async function onLogOut() {
     await AsyncStorage.removeItem('mobileNumber');
+    await AsyncStorage.removeItem('email');
     setIsLoggedIn(false);
     // navigation.navigate(strings.login.screenTitle);
   }
@@ -43,7 +49,7 @@ function HomeScreen({navigation}) {
           lineHeight: 32,
           textAlign: 'center',
           marginBottom: 30,
-        }}>{`Welcome to Home Screen ${mobileNumber}`}</Text>
+        }}>{`Welcome to Home Screen ${user}`}</Text>
       <Button title="Log Out" onPress={() => onLogOut()} />
     </View>
   );

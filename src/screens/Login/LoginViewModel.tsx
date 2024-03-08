@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useContext, useEffect, useState } from "react";
 import { Alert, Keyboard } from "react-native";
+import { AuthContext } from "../../context/AuthContext";
 import strings from "../../utils/strings";
 
 function useLoginViewModel({navigation}){
@@ -10,7 +12,8 @@ function useLoginViewModel({navigation}){
     const [password, setPassword] = useState("");
     const [hidePassWord, setHidePassWord] = useState(true);
     const [hideConfirmPassWord, setHideConfirmPassWord] = useState(true);
-  
+    const {setIsLoggedIn} = useContext(AuthContext);
+
     useEffect(() => {
         value.length === 10 && Keyboard.dismiss();
       }, [value]);
@@ -33,7 +36,7 @@ function useLoginViewModel({navigation}){
         if(isEnabled == true){
           if(loginWithEmail == true && email){
               navigation.navigate(strings.verifyOtp.screenTitle, {
-                mobileNumber: email,
+                email: email,
               });
           } else if(loginWithEmail == false && value){
             navigation.navigate(strings.verifyOtp.screenTitle, {
@@ -46,13 +49,11 @@ function useLoginViewModel({navigation}){
           }  
         } else {
           if (loginWithEmail == true && email && password){
-            navigation.navigate(strings.verifyOtp.screenTitle, {
-              mobileNumber: email,
-            });
+            AsyncStorage.setItem('email', email);
+            setIsLoggedIn(true);
           } else if(loginWithEmail == false && value && password){
-            navigation.navigate(strings.verifyOtp.screenTitle, {
-              mobileNumber: value,
-            });
+            AsyncStorage.setItem('mobileNumber', value);
+            setIsLoggedIn(true);
           } else if(loginWithEmail == true && !email && password){
             Alert.alert('', 'Please enter email');
           } else if(loginWithEmail == false && !value && password){

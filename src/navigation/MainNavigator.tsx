@@ -19,10 +19,11 @@ export default function MainNavigator() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const item = await AsyncStorage.getItem('mobileNumber');
-      if (item !== null) {
+      const mobile = await AsyncStorage.getItem('mobileNumber');
+      const email = await AsyncStorage.getItem('email');
+      if (mobile !== null || email !== null) {
         setIsLoggedIn(true);
-      } else {
+      } else if (mobile === null && email === null) {
         setIsLoggedIn(false);
       }
     };
